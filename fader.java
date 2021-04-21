@@ -28,6 +28,7 @@ public class fader {
             count++;
             System.out.println(count);
         } while (!start.equals(end));
+        System.out.println("number of times looped "+count);
     }
 
 }
