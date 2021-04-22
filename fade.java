@@ -4,9 +4,10 @@ import java.util.Timer;
 public class fade {
     public static void engine(){
         int a=0, b=0, c=0, x=255, y=0, z=0,count=0;
+        float run=3, moves;
         Color start = new Color(a, b, c);
         Color end = new Color(x, y, z);
-        Timer run = new Timer();
+        Timer task = new Timer();
 
         do {
             if (a > x) {
@@ -26,9 +27,11 @@ public class fade {
             }
             start = new Color(a,b,c);
             count++;
-            System.out.println(count);
+            //System.out.println(count);
         } while (!start.equals(end));
-        System.out.println("number of times looped "+count);
+        //System.out.println("number of times looped "+count);
+        moves= count/run;
+        System.out.println("moves needed per second "+moves);
     }
     public static void main(String[] args){
         engine();
