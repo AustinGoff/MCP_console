@@ -40,6 +40,7 @@ public class Main {
         System.out.println("Fade: create a timed color transformation");
         System.out.println("enter exit to quit: ");
     }
+
     public static void fadecall() {
         fader call = new fader();
         call.engine();
