@@ -3,12 +3,13 @@ import java.util.Timer;
 
 public class fade {
     public static void engine(){
-        int a=0, b=0, c=0, x=255, y=0, z=0,count=0;
-        float run=3, moves;
+        int a=255, b=255, c=255, x=17, y=255, z=50,count=0,temp=0,a2=a,b2=b,c2=c;
+        float run=3, moves, milmov;
 
         Color start = new Color(a, b, c);
         Color end = new Color(x, y, z);
         long startTime = System.nanoTime();
+
     //loop to calculate moves needed to fade to color
         do {
             if (a > x) {
@@ -33,26 +34,43 @@ public class fade {
 
         long endTime = System.nanoTime();
         long duration = (endTime-startTime);
-        //duration = duration/1000000;
-        System.out.println("number of times looped "+count+" in "+duration+" nanoseconds");
+        //System.out.println("number of times looped "+count+" in "+duration+" nanoseconds");
         moves= count/run;
         System.out.println("moves needed per second "+moves);
-
-        a=0;
-        while (a<count){
-            startTime = System.nanoTime();
-            for (int i=0;i<=moves;i++) {
-                //System.out.println("timed loop: "+i);
+        milmov=(run*1000)/count;
+        milmov=Math.round(milmov);
+        System.out.println("millisecond per move:  "+milmov);
+        start = new Color(a2, b2, c2);
+        startTime = System.nanoTime();
+        //timed color changing loop
+        while (temp<count){
+            if (a2 > x) {
+                a2--;
+            } else if (a2 < x) {
+                a2++;
+            }
+            if (b2 > y) {
+                b2--;
+            } else if (b2 < y) {
+                b2++;
+            }
+            if (c2 > z) {
+                c2--;
+            } else if (c2 < z) {
+                c2++;
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep((long)milmov);
             }catch(InterruptedException ie){
                 Thread.currentThread().interrupt();
             }
-            endTime = System.nanoTime();
-            a+=moves;
-            System.out.println("timed loop2: "+a+" in "+ (endTime-startTime)/1000000000+ " sec");
+            start = new Color(a2,b2,c2);
+            temp++;
+            System.out.println("start color is now: "+start);
         }
+
+        endTime = System.nanoTime();
+        System.out.println("timed loop2: "+temp+"in " + (endTime-startTime)/1000000000+ " sec");
         System.exit(0);
     }
     public static void main(String[] args){
