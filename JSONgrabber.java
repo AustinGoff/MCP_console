@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class Grabber {
+class Grabber {
 
     static String manuf, fixt = "";
 
