@@ -1,0 +1,57 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.Scanner;
+
+public class Grabber {
+
+    static String manuf, fixt = "";
+
+    public static void main(String[]args) throws Exception {
+        information();
+    }
+
+    public static void information() throws IOException {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the lighting fixture's manufacturer: ");
+        manuf = input.next().toLowerCase();
+        input.nextLine();
+
+        System.out.print("Enter the lighting fixture's name: ");
+        String temp = input.nextLine().toLowerCase();
+        fixt = temp.replace(" ", "-");
+
+        webSearch();
+    }
+
+    public static void webSearch() throws IOException {
+        URL website = new URL("https://open-fixture-library.org/"+ manuf +"/" + fixt + ".ofl");
+
+        HttpURLConnection conn =  (HttpURLConnection) website.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+        int code = conn.getResponseCode();
+
+        if(code == 200) {
+            System.out.println("Lighting fixture found, downloading.");
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream("C:\\LightFixture\\"+manuf+"+"+fixt+".zip");
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Enter the number 1 to continue downloading, any other input will stop the program: ");
+            String answer = scan.next();
+            if(answer.equals("1")){
+                information();
+            }else{
+                System.exit(0);
+            }
+        }else{
+            System.out.println("Lighting fixture not found, please check and re-enter information.");
+            information();
+        }
+    }
+}
