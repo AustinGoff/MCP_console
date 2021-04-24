@@ -6,7 +6,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Scanner;
 
-public class Grabber {
+class Grabber {
 
     static String manuf, fixt = "";
 
