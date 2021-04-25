@@ -23,13 +23,38 @@ public class fader {
         System.out.println("lastly enter length of time for transition to last in seconds: format 3 or 3.5");
         float run = scanner.nextInt();
 
-        int count=0,temp=0,a2=a,b2=b,c2=c;
+        int count=0,temp=0,a2,b2,c2;
         float moves, milmov;
         Color start = new Color(a, b, c);
         Color end = new Color(x, y, z);
         Color wstart = new Color(a, b, c);
         long startTime = System.nanoTime();
+        a2= (int) Math.pow((a-x),2);
+        b2= (int) Math.pow((b-y),2);
+        c2= (int) Math.pow((c-z),2);
 
+
+        a2= (int) Math.sqrt(a2);
+        b2= (int) Math.sqrt(b2);
+        c2= (int) Math.sqrt(c2);
+
+
+        if(a2>b2){
+            count=a2;
+            if(a2>c2){
+                count=a2;
+            }else{
+                count=c2;
+            }
+        }else{
+            count=b2;
+            if(b2>c2){
+                count=b2;
+            }else{
+                count=c2;
+            }
+        }
+    /*
         //loop to calculate moves needed to fade to color
         do {
             if (a > x) {
@@ -52,6 +77,8 @@ public class fader {
             //System.out.println(count);
         } while (!start.equals(end));
 
+    */
+
         long endTime = System.nanoTime();
         long duration = (endTime-startTime);
         System.out.println("number of times looped "+count+" in "+duration+" nanoseconds");
@@ -60,31 +87,30 @@ public class fader {
         milmov=(run*1000)/count;
         milmov=Math.round(milmov);
         System.out.println("millisecond per move:  "+milmov);
-        start = new Color(a2, b2, c2);
         startTime = System.nanoTime();
         //timed color changing loop
         while (temp<count){
-            if (a2 > x) {
-                a2--;
-            } else if (a2 < x) {
-                a2++;
+            if (a > x) {
+                a--;
+            } else if (a < x) {
+                a++;
             }
-            if (b2 > y) {
-                b2--;
-            } else if (b2 < y) {
-                b2++;
+            if (b > y) {
+                b--;
+            } else if (b < y) {
+                b++;
             }
-            if (c2 > z) {
-                c2--;
-            } else if (c2 < z) {
-                c2++;
+            if (c > z) {
+                c--;
+            } else if (c < z) {
+                c++;
             }
             try {
                 Thread.sleep((long)milmov);
             }catch(InterruptedException ie){
                 Thread.currentThread().interrupt();
             }
-            start = new Color(a2,b2,c2);
+            start = new Color(a,b,c);
             temp++;
             //System.out.println("start color is now: "+start);
         }

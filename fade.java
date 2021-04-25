@@ -3,7 +3,7 @@ import java.util.Timer;
 
 public class fade {
     public static void engine(){
-        int a=255, b=255, c=255, x=17, y=255, z=50,count=0,temp=0,a2,b2,c2;
+        int a=200, b=10, c=155, x=255, y=255, z=0,count=0,temp=0,a2,b2,c2;
         float run=3, moves, milmov;
         Color start = new Color(a, b, c);
         Color end = new Color(x, y, z);
@@ -21,19 +21,20 @@ public class fade {
 
         if(a2>b2){
             count=a2;
+            if(a2>c2){
+                count=a2;
+            }else{
+                count=c2;
+            }
         }else{
             count=b2;
+            if(b2>c2){
+                count=b2;
+            }else{
+                count=c2;
+            }
         }
-        if(a2>c2){
-            count=a2;
-        }else{
-            count=c2;
-        }
-        if(b2>c2){
-            count=b2;
-        }else{
-            count=c2;
-        }
+
 
     //loop to calculate moves needed to fade to color
         /*
