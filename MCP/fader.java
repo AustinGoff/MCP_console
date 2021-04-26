@@ -29,6 +29,7 @@ public class fader {
         Color end = new Color(x, y, z);
         Color wstart = new Color(a, b, c);
         long startTime = System.nanoTime();
+        //instead of commented out while loop we use quick math for faster calculation of steps
         a2= (int) Math.pow((a-x),2);
         b2= (int) Math.pow((b-y),2);
         c2= (int) Math.pow((c-z),2);
