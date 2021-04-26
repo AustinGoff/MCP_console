@@ -39,7 +39,7 @@ public class fader {
         b2= (int) Math.sqrt(b2);
         c2= (int) Math.sqrt(c2);
 
-
+//if else statement to find the max number of steps needed for varaibles
         if(a2>b2){
             count=a2;
             if(a2>c2){
