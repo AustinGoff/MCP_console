@@ -1,14 +1,75 @@
-package MCP;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
+import java.net.URI;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
 
 public class Main {
     public static final String TEXT_RESET = "\u001B[0m";
     public static final String TEXT_RED = "\u001B[31m";
 
+    private static void lightTest(){
+        try{
+            URI webpage = new URI("http://10.100.0.104/00.html");
+            java.awt.Desktop.getDesktop().browse(webpage);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void updateLights() throws IOException, URISyntaxException {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Enter number of lights to turn on:");
+//        String number= scanner.next();
+
+        String number = "9";
+        final String LOGIN_FORM_URL = "http://10.100.0.104/00.html";
+        //final String LOGIN_FORM_URL = "C:\\Users\\Owen Schweigert\\Downloads\\completedLogin";
+        final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36";
+
+        Connection.Response loginFormResponse = Jsoup.connect(LOGIN_FORM_URL)
+                .method(Connection.Method.GET)
+                .userAgent(USER_AGENT)
+                .execute();
+
+        FormElement loginForm = (FormElement)loginFormResponse.parse().select("form#00").first();
+        //System.out.println(loginForm);
+        checkElement("name", loginForm);
+
+        Element loginField = loginForm.select("[name$=I026]").first();
+        checkElement("Login Field", loginField);
+        loginField.val(number);
+        System.out.println(loginField);
+
+        Connection.Response loginActionResponse = loginForm.submit()
+                .cookies(loginFormResponse.cookies())
+                .data("Test Lights","op")
+                .method(Connection.Method.POST)
+                .userAgent(USER_AGENT)
+                .execute();
+
+        System.out.println(loginActionResponse.parse().html());
+
+        //driver.findElement(By.name("signUp")).click();
+
+    }
+
+    public static void checkElement(String name, Element elem) {
+        if (elem == null) {
+            throw new RuntimeException("Unable to find " + name);
+        }
+    }
 
     private static void RGBtoHex(){
         System.out.println("enter RGB, format: 200 155 100");
@@ -21,6 +82,7 @@ public class Main {
         System.out.println(" ");
         System.out.println("enter new command or exit to quit: ");
     }
+
     private static void HextoRGB(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter HEX, format: #FFCCEE");
@@ -34,8 +96,11 @@ public class Main {
         System.out.println(" ");
         System.out.println("enter new command or exit to quit: ");
     }
+
     private static void menu(){
         System.out.println("current command options include:");
+        System.out.println("openlighttest: open test on webpage");
+        System.out.println("updatelights: update lights");
         System.out.println("menu: displays options");
         System.out.println("toHEX: turns RGB into Hex code");
         System.out.println("toRGB: turns hex into RGB color code");
@@ -63,7 +128,7 @@ public class Main {
         menu();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         File dir = new File("C:/MCP");
         File lf = new File("C:/MCP/LightFixtures");
         File sd = new File("C:/MCP/SaveData");
@@ -110,6 +175,12 @@ public class Main {
 	while(!command.equals("EXIT")){
         command= scanner.next().toUpperCase();
         switch(command){
+            case "LIGHTTEST":
+                lightTest();
+                break;
+            case "UPDATELIGHTS":
+                updateLights();
+                break;
             case "TOHEX":
                 RGBtoHex();
                 break;
@@ -130,13 +201,11 @@ public class Main {
                 break;
             default:
                 System.out.println(TEXT_RED+"unknown command entered try again"+TEXT_RESET);
-
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 menu();
         }
     }
