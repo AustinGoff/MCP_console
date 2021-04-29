@@ -1,3 +1,4 @@
+package MCP;
 
 import java.awt.*;
 import java.io.IOException;
