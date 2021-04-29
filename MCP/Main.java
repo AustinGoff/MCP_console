@@ -106,6 +106,9 @@ public class Main {
         System.out.println("toRGB: turns hex into RGB color code");
         System.out.println("Fade: create a timed color transformation");
         System.out.println("Parse: download manufacturer details to zip file");
+        System.out.println("Tiltpan: create a timed pan and tilt transformation");
+        System.out.println("Dim: create a timed brightness transformation");
+        System.out.println("ONOFF: turn instrument on or off");
         System.out.println("enter exit to quit: ");
     }
 
@@ -113,6 +116,23 @@ public class Main {
         fader call = new fader();
         call.engine();
         System.out.println();
+        menu();
+    }
+
+    public static void tiltp() {
+        tiltPan call = new tiltPan();
+        call.tEngine();
+        System.out.println();
+        menu();
+    }
+    public static void dim() {
+        dimmer call = new dimmer();
+        call.dEngine();
+        System.out.println();
+        menu();
+    }
+    public static void on() {
+        //need to implement packet maker to send variable to instruments
         menu();
     }
 
@@ -195,6 +215,15 @@ public class Main {
                 break;
             case "FADE":
                 fadecall();
+                break;
+            case "TILTPAN":
+                tiltp();
+                break;
+            case "DIM":
+                dim();
+                break;
+            case "ONOFF":
+                on();
                 break;
             case "PARSE":
                 grabber();

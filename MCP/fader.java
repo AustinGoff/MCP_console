@@ -112,6 +112,7 @@ public class fader {
                 Thread.currentThread().interrupt();
             }
             start = new Color(a,b,c);
+            //need to implement packet maker to send start variable to instruments
             temp++;
             //System.out.println("start color is now: "+start);
         }
