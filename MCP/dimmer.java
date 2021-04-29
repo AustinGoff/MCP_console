@@ -10,18 +10,20 @@ public class dimmer {
 
     public void dEngine(){
         int sb=0,eb=0;
-        System.out.println("enter brightness you would like to start from: if nothing is entered default will be 0 ");
+        System.out.println("enter brightness you would like to start from: ");
         System.out.println("variable cannot be greater then 100 or less then 0");
-        while(sb<=100 && sb>=0) {
+        do {
             Scanner scanner = new Scanner(System.in);
             sb = scanner.nextInt();
-        }
+
+        }while(sb>=100 && sb<=0);
+
         Scanner scanner = new Scanner(System.in);;
-        while(eb<=100 && eb>=0) {
-            System.out.println("enter brightness you would like to end at: if nothing is entered default will be 0 ");
+        do {
+            System.out.println("enter brightness you would like to end at:");
             System.out.println("variable cannot be greater then 100 or less then 0");
             eb = scanner.nextInt();
-        }
+        }while(eb>=100 && eb<=0);
         System.out.println("lastly enter length of time for transition to last in seconds: format 3 or 3.5");
         float run = scanner.nextInt();
 
