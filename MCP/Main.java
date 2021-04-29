@@ -12,8 +12,7 @@ import java.net.URI;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+
 
 
 public class Main {
@@ -100,7 +99,7 @@ public class Main {
 
     private static void menu(){
         System.out.println("current command options include:");
-        System.out.println("openlighttest: open test on webpage");
+        System.out.println("LightTest: open test on webpage");
         System.out.println("updatelights: update lights");
         System.out.println("menu: displays options");
         System.out.println("toHEX: turns RGB into Hex code");
