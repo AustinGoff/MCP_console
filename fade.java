@@ -1,3 +1,6 @@
+/*
+the purpose of this code was to be a standalone testing pager for this feature, after completion of feature it was or will be implemented into the main shell for use.
+*/
 import java.awt.*;
 import java.util.Timer;
 
